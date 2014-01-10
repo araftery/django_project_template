@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as DEFAULT_TCP
+import sys
+from path import path
 
 # i.e., where root urlconf is
-PROJECT_ROOT = os.path.join(os.path.join(os.path.join(__file__, os.pardir), os.pardir))
+PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
 
 # put the apps directory in the PYTHONPATH
 os.sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))

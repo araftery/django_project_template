@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url('', include('{{ project_name }}.core.urls')),
+    url('', include('core.urls')),
 )
