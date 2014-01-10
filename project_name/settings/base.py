@@ -95,7 +95,10 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static_common').replace('\\','/'),
     )
 
-TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_TCP
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    ) + DEFAULT_TCP
+
 
 # Email settings
 
