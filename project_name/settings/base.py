@@ -12,9 +12,10 @@ https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as DEFAULT_TCP
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.join(__file__, os.pardir), os.pardir))
+# i.e., where manage.py is
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.join(os.path.join(__file__, os.pardir), os.pardir), os.pardir))
 
-# put the apps directory in our PYTHONPATH
+# put the apps directory in the PYTHONPATH
 sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 # Quick-start development settings - unsuitable for production
@@ -85,11 +86,14 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_ROOT, 'templates').replace('\\','/'),
+    os.path.join(PROJECT_ROOT, 'templates_common').replace('\\','/'),
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_TCP + (
-)
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static_common').replace('\\','/'),
+    )
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_TCP
 
 # Email settings
 
