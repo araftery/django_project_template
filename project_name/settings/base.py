@@ -1,33 +1,24 @@
-"""
-Django settings for {{ project_name }} project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/{{ docs_version }}/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/{{ docs_version }}/ref/settings/
-"""
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as DEFAULT_TCP
-import sys
+import os. sys
 from path import path
+
+############################################################
+##### SETUP ################################################
+############################################################
 
 # i.e., where root urlconf is
 PROJECT_ROOT = path(__file__).abspath().dirname().dirname()
-
-# put the apps directory in the PYTHONPATH
 os.sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/{{ docs_version }}/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '{{ secret_key }}'
+############################################################
+##### DATABASE #############################################
+############################################################
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+############################################################
+##### APPS #################################################
+############################################################
 
 # Application definition
 DEFAULT_APPS = (
@@ -51,6 +42,10 @@ MY_APPS = (
 
 INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + MY_APPS
 
+############################################################
+##### MIDDLEWARE ###########################################
+############################################################
+
 DEFAULT_MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,12 +60,9 @@ THIRD_PARTY_MIDDLEWARE = (
 
 MIDDLEWARE_CLASSES = DEFAULT_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE
 
-ROOT_URLCONF = '{{ project_name }}.urls'
-
-WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
-
-# Internationalization
-# https://docs.djangoproject.com/en/{{ docs_version }}/topics/i18n/
+############################################################
+##### INTERNATIONALIZATION #################################
+############################################################
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -78,11 +70,9 @@ USE_I18N = False
 USE_L10N = False
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/{{ docs_version }}/howto/static-files/
-
-STATIC_URL = '/static/'
-
+############################################################
+##### TEMPLATES ############################################
+############################################################
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -91,21 +81,79 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates_common').replace('\\','/'),
 )
 
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static_common').replace('\\','/'),
-    )
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as DEFAULT_TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     ) + DEFAULT_TCP
 
 
-# Email settings
+############################################################
+##### AUTHENTICATION #######################################
+############################################################
 
-# EMAIL_USE_TLS = True
-# FROM_EMAIL = username@gmail.com
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = username
-# EMAIL_HOST_PASSWORD = password
-# EMAIL_PORT = 587
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+URL_PATH = ''
+
+############################################################
+##### AWS ##################################################
+############################################################
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+############################################################
+##### EMAIL ################################################
+############################################################
+
+EMAIL_USE_TLS = True
+FROM_EMAIL = os.environ.get('FROM_EMAIL')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT'))
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+ADMINS = (
+    ('Andrew Raftery', 'andrewraftery@gmail.com'),
+    )
+
+
+############################################################
+##### DB BACKUPS ###########################################
+############################################################
+
+DBBACKUP_STORAGE = 'dbbackup.storage.s3_storage'
+DBBACKUP_S3_BUCKET = AWS_STORAGE_BUCKET_NAME
+DBBACKUP_S3_ACCESS_KEY = AWS_ACCESS_KEY_ID
+DBBACKUP_S3_SECRET_KEY = AWS_SECRET_ACCESS_KEY
+
+############################################################
+##### STATIC FILES #########################################
+############################################################
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static_common').replace('\\','/'),
+    )
+
+
+############################################################
+##### OTHER ################################################
+############################################################
+
+ROOT_URLCONF = '{{ project_name }}.urls'
+WSGI_APPLICATION = '{{ project_name }}.wsgi.application'
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+SECRET_KEY = '{{ secret_key }}'
+DATABASES = {}
+TIME_ZONE = 'America/New_York'
+
+
+############################################################
+##### PROJECT-SPECIFIC #####################################
+############################################################
+
+

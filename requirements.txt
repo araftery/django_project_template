@@ -1,7 +1,3 @@
-bobo
-django-dbbackup
-django-widget-tweaks
-psycopg2
-pytz
-south
-django-storages
+# for Heroku
+-r requirements/development.txt
+django-toolbelt

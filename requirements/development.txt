@@ -1,0 +1,7 @@
+bobo
+django-dbbackup
+django-widget-tweaks
+psycopg2
+pytz
+south
+django-storages
